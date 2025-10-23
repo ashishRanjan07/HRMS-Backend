@@ -4,7 +4,6 @@ const {
   createPayroll,
   updatePayroll,
   getPayrollById,
-  getPayrollsForOrg,
   deletePayroll,
   getPayrollsByOrganization,
 } = require("../controllers/payroll.controller");
@@ -18,24 +17,15 @@ const {
 router.post("/create", verifyToken, verifyOrganizationAdmin, createPayroll);
 
 // Update Payroll (Org Admin only)
-router.put("/:payrollId", verifyToken, verifyOrganizationAdmin, updatePayroll);
+router.put("/:payrollId", verifyToken, updatePayroll);
 
 // Get Payroll by ID (SuperAdmin or Org Admin)
-router.get("/:payrollId", verifyToken, verifyOrganizationAdmin, getPayrollById);
-
-// Get all Payrolls for an Organization (Org Admin view)
-router.get(
-  "/organization/:orgId",
-  verifyToken,
-  verifyOrganizationAdmin,
-  getPayrollsForOrg
-);
+router.get("/:payrollId",  getPayrollById);
 
 // Get all Payrolls for an Organization (SuperAdmin view)
 router.get(
   "/organization/getall/:orgId",
   verifyToken,
-  verifyOrganizationAdmin,
   getPayrollsByOrganization
 );
 
@@ -43,7 +33,6 @@ router.get(
 router.delete(
   "/:payrollId",
   verifyToken,
-  verifyOrganizationAdmin,
   deletePayroll
 );
 

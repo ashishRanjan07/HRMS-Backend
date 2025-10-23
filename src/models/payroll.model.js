@@ -27,10 +27,25 @@ const payrollSchema = new mongoose.Schema(
       processed_on: { type: Date },
       payroll_status: {
         type: String,
-        enum: ["Draft", "Processed", "Approved", "Released"],
+        enum: ["Draft", "Processed", "Approved", "Released", "Cancelled"],
         default: "Draft",
       },
       batch_id: { type: String },
+    },
+
+    // Add deletion tracking fields
+    isDeleted: {
+      type: Boolean,
+      default: false
+    },
+    deletedAt: {
+      type: Date,
+      default: null
+    },
+    deletedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      default: null
     },
 
     employee_snapshot: { type: Object },
